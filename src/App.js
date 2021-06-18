@@ -1,5 +1,5 @@
 import React from 'react';
-import List from './containers/List';
+
 import { makeStyles } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
@@ -7,7 +7,6 @@ import Typography from '@material-ui/core/Typography';
 import IconButton from '@material-ui/core/IconButton';
 import MenuIcon from '@material-ui/icons/Menu';
 import Container from '@material-ui/core/Container';
-import AuthForm from './containers/AuthForm';
 import ListItem from '@material-ui/core/ListItem';
 import {
   BrowserRouter as Router,
@@ -15,6 +14,9 @@ import {
   Route,
   NavLink,
 } from 'react-router-dom';
+
+const Login = React.lazy(() => import('./pages/Login'));
+const Home = React.lazy(() => import('./pages/Home'));
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -54,14 +56,16 @@ function App() {
         </Toolbar>
       </AppBar>
       <Container maxWidth="sm">
-        <Switch>
-          <Route path="/login">
-            <AuthForm />
-          </Route>
-          <Route path="/">
-            <List />
-          </Route>
-        </Switch>
+        <React.Suspense fallback={<div>Loading...</div>}>
+          <Switch>
+            <Route path="/login">
+              <Login />
+            </Route>
+            <Route path="/">
+              <Home />
+            </Route>
+          </Switch>
+        </React.Suspense>
       </Container>
     </Router>
   );
