@@ -5,8 +5,17 @@ import API from '../api';
 function List() {
   const [data, setData] = useState([]);
 
+  async function loadList() {
+    try {
+      const { data = [], message = '' } = await API.getTweets();
+      setData(data);
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
   useEffect(() => {
-    API.getTweets().then((response) => setData(response));
+    loadList();
   }, []);
 
   return (
