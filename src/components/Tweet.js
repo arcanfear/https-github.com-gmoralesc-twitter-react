@@ -22,7 +22,12 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function Tweet({ name, username, date, content }) {
+export default function Tweet({
+  name = '',
+  username = '',
+  date = '',
+  content = '',
+}) {
   const classes = useStyles();
 
   return (
