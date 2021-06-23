@@ -15,6 +15,8 @@ import {
   NavLink,
 } from 'react-router-dom';
 import TweetDetails from './pages/TweetDetails';
+import ProtectedRoute from './containers/ProtectedRoute';
+import UserBar from './containers/UserBar';
 
 const Login = React.lazy(() => import('./pages/Login'));
 const Home = React.lazy(() => import('./pages/Home'));
@@ -51,9 +53,7 @@ function App() {
               React Twitter
             </Typography>
           </ListItem>
-          <ListItem component={NavLink} to="/login" button>
-            Login
-          </ListItem>
+          <UserBar />
         </Toolbar>
       </AppBar>
       <Container maxWidth="sm">
@@ -62,12 +62,12 @@ function App() {
             <Route path="/login">
               <Login />
             </Route>
-            <Route path="/tweets/:id">
+            <ProtectedRoute path="/tweets/:id">
               <TweetDetails />
-            </Route>
-            <Route path="/">
+            </ProtectedRoute>
+            <ProtectedRoute path="/">
               <Home />
-            </Route>
+            </ProtectedRoute>
           </Switch>
         </React.Suspense>
       </Container>

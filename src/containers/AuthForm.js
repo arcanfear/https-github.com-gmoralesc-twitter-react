@@ -2,6 +2,7 @@ import { Button, TextField, Typography } from '@material-ui/core';
 import React from 'react';
 import { useHistory } from 'react-router-dom';
 import API from '../api';
+import { setSession } from '../utils/auth';
 
 export default function AuthForm() {
   const history = useHistory();
@@ -15,7 +16,7 @@ export default function AuthForm() {
         password: password.value,
       });
       const { token } = data;
-      localStorage.setItem('token', token);
+      setSession({ data: token });
       history.push('/');
     } catch (error) {
       console.error(error);
