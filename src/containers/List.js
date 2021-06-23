@@ -7,8 +7,10 @@ function List() {
 
   async function loadList() {
     try {
-      const { data = [], message = '' } = await API.getTweets();
-      setData(data);
+      const data = await API.getTweets();
+      if (data) {
+        setData(data);
+      }
     } catch (error) {
       console.log(error);
     }
