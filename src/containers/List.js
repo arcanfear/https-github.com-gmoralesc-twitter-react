@@ -1,10 +1,16 @@
 import React, { useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
+import MuiAlert from '@material-ui/lab/Alert';
 import Tweet from '../components/Tweet';
 import API from '../api';
 
+function Alert(props) {
+  return <MuiAlert elevation={6} variant="filled" {...props} />;
+}
+
 function List() {
   const [data, setData] = useState([]);
+  const [error, setError] = useState('');
   const history = useHistory();
 
   async function loadList() {
@@ -14,6 +20,7 @@ function List() {
         setData(data);
       }
     } catch (error) {
+      setError(error.message);
       console.log(error);
     }
   }
@@ -28,15 +35,15 @@ function List() {
 
   return (
     <>
-      {data.map((item) => {
-        const date = new Date(item.createdAt).toDateString();
+      {error && <Alert severity="error">{error}</Alert>}
+      {data.map(({ id, user, date, content }) => {
         return (
-          <div onClick={() => displayTweet({ id: item._id })} key={item._id}>
+          <div onClick={() => displayTweet({ id })} key={id}>
             <Tweet
-              name={item.user.name}
-              username={item.user.username}
+              name={user.name}
+              username={user.username}
               date={date}
-              content={item.content}
+              content={content}
             />
           </div>
         );
