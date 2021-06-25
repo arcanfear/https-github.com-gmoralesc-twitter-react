@@ -1,11 +1,13 @@
 import { Button, TextField, Typography } from '@material-ui/core';
-import React from 'react';
+import React, { useContext } from 'react';
 import { useHistory } from 'react-router-dom';
 import API from '../api';
 import { setSession } from '../utils/auth';
+import UserContext from '../containers/UserContext';
 
 export default function AuthForm() {
   const history = useHistory();
+  const { setUser } = useContext(UserContext);
 
   async function onSubmit(event) {
     event.preventDefault();
@@ -17,6 +19,7 @@ export default function AuthForm() {
       });
       const { token } = data;
       setSession({ data: token });
+      setUser(data);
       history.push('/');
     } catch (error) {
       console.error(error);
