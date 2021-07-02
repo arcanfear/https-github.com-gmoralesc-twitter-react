@@ -23,11 +23,14 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function Tweet({
+  id,
   name = '',
   username = '',
   date = '',
   content = '',
-  commentsCount,
+  commentsCount = 0,
+  likes = 0,
+  onLike = () => {},
 }) {
   const classes = useStyles();
 
@@ -53,8 +56,13 @@ export default function Tweet({
         </Typography>
       </CardContent>
       <CardActions disableSpacing>
-        <IconButton aria-label="add to favorites">
-          <FavoriteIcon />
+        <IconButton
+          aria-label="Like"
+          onClick={(event) => {
+            onLike(event, id);
+          }}
+        >
+          {likes} <FavoriteIcon />
         </IconButton>
         {commentsCount === 0 ? (
           <ChatBubbleOutlineIcon />
