@@ -26,3 +26,10 @@ export async function getTweet({ id }) {
   const { data } = response.data;
   return formatTweet(data);
 }
+
+export async function createComment({ tweetId, comment }) {
+  return await http.post(`/tweets/comments`, {
+    tweetId,
+    comment,
+  });
+}

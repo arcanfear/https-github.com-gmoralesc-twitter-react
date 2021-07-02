@@ -36,7 +36,7 @@ function List() {
   return (
     <>
       {error && <Alert severity="error">{error}</Alert>}
-      {data.map(({ id, user, date, content }) => {
+      {data.map(({ id, user, date, content, comments }) => {
         return (
           <div onClick={() => displayTweet({ id })} key={id}>
             <Tweet
@@ -44,6 +44,7 @@ function List() {
               username={user.username}
               date={date}
               content={content}
+              commentsCount={comments.length}
             />
           </div>
         );

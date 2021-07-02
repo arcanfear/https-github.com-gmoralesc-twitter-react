@@ -9,9 +9,9 @@ import IconButton from '@material-ui/core/IconButton';
 import Typography from '@material-ui/core/Typography';
 import { red } from '@material-ui/core/colors';
 import FavoriteIcon from '@material-ui/icons/Favorite';
-import ShareIcon from '@material-ui/icons/Share';
-import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
+import ChatBubbleOutlineIcon from '@material-ui/icons/ChatBubbleOutline';
+import ChatBubbleIcon from '@material-ui/icons/ChatBubble';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -27,6 +27,7 @@ export default function Tweet({
   username = '',
   date = '',
   content = '',
+  commentsCount,
 }) {
   const classes = useStyles();
 
@@ -55,12 +56,13 @@ export default function Tweet({
         <IconButton aria-label="add to favorites">
           <FavoriteIcon />
         </IconButton>
-        <IconButton aria-label="share">
-          <ShareIcon />
-        </IconButton>
-        <IconButton aria-label="show more">
-          <ExpandMoreIcon />
-        </IconButton>
+        {commentsCount === 0 ? (
+          <ChatBubbleOutlineIcon />
+        ) : (
+          <>
+            {commentsCount} <ChatBubbleIcon />
+          </>
+        )}
       </CardActions>
     </Card>
   );
