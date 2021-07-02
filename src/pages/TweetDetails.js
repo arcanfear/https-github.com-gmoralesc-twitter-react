@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
+import { Helmet } from 'react-helmet';
 import { makeStyles } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
@@ -65,6 +66,9 @@ export default function TweetDetails() {
 
   return (
     <>
+      <Helmet>
+        <title>Tweet</title>
+      </Helmet>
       <Tweet
         id={tweet.id}
         name={tweet.user.name}
