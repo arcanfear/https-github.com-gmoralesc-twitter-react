@@ -79,15 +79,15 @@ export default function TweetDetails() {
         </Button>
       </form>
       {tweet.comments.map(({ _id, comment, user }) => (
-        <>
+        <React.Fragment key={_id}>
           <div className={classes.spacer} />
-          <Paper key={_id} className={classes.spacer}>
+          <Paper className={classes.spacer}>
             <p>{comment}</p>
             <p>
               {user.name} - @{user.username}
             </p>
           </Paper>
-        </>
+        </React.Fragment>
       ))}
     </>
   );
