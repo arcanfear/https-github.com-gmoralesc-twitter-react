@@ -1,12 +1,12 @@
 import http from '../utils/http';
 import { format } from 'date-fns';
+import { es } from 'date-fns/locale';
 
 function formatUser(user) {
   //const dateCreatedAt = formatRelative(new Date(user.createdAt), new Date());
-  const dateCreatedAt = `${format(
-    new Date(user.createdAt),
-    'MMMM'
-  )} de ${format(new Date(user.createdAt), 'yyyy')}`;
+  const dateCreatedAt = `${format(new Date(user.createdAt), 'MMMM', {
+    locale: es,
+  })} de ${format(new Date(user.createdAt), 'yyyy')}`;
 
   return {
     ...user,
@@ -50,4 +50,22 @@ export async function updateUser({
     password,
     passwordConfirmation,
   });
+}
+
+export async function createUser({
+  name,
+  username,
+  email,
+  password,
+  passwordConfirmation,
+}) {
+  const response = await http.post(`/users`, {
+    name,
+    username,
+    email,
+    password,
+    passwordConfirmation,
+  });
+  const { data } = response.data;
+  return formatUser(data);
 }

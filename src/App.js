@@ -20,6 +20,7 @@ import { UserProvider } from './containers/UserContext';
 
 const Login = React.lazy(() => import('./pages/Login'));
 const Home = React.lazy(() => import('./pages/Home'));
+const SignUp = React.lazy(() => import('./pages/SignUp'));
 const TweetDetails = React.lazy(() => import('./pages/TweetDetails'));
 const Profile = React.lazy(() => import('./pages/Profile'));
 const EditProfile = React.lazy(() => import('./pages/EditProfile'));
@@ -75,6 +76,9 @@ function App() {
               <ProtectedRoute path="/tweets/:id">
                 <TweetDetails />
               </ProtectedRoute>
+              <Route path="/signUp">
+                <SignUp />
+              </Route>
               <ProtectedRoute path="/">
                 <Home />
               </ProtectedRoute>
