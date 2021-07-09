@@ -5,5 +5,4 @@ export const initialState = {
     username: '',
     email: '',
   },
-  isAuthenticated: false,
 };
