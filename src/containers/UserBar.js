@@ -3,10 +3,14 @@ import { isAuthenticated, clearSession } from '../utils/auth';
 import Button from '@material-ui/core/Button';
 import ListItem from '@material-ui/core/ListItem';
 import { NavLink, useHistory } from 'react-router-dom';
-import { connect } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 
-function UserBar({ user, unsetUser }) {
+const selectUser = (state) => state.user;
+
+export default function UserBar() {
   const history = useHistory();
+  const user = useSelector(selectUser);
+  const dispatch = useDispatch();
 
   return isAuthenticated() ? (
     <>
@@ -16,7 +20,9 @@ function UserBar({ user, unsetUser }) {
       <Button
         onClick={() => {
           clearSession();
-          unsetUser();
+          dispatch({
+            type: 'UNSET_USER',
+          });
           history.push('/login');
         }}
       >
@@ -29,21 +35,3 @@ function UserBar({ user, unsetUser }) {
     </ListItem>
   );
 }
-
-const mapStateToProps = (state) => {
-  return {
-    user: state.user,
-  };
-};
-
-const mapDispatchToProps = (dispatch) => {
-  return {
-    unsetUser: () => {
-      dispatch({
-        type: 'UNSET_USER',
-      });
-    },
-  };
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(UserBar);
