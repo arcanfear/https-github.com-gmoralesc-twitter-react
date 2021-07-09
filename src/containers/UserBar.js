@@ -1,27 +1,26 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import { isAuthenticated, clearSession } from '../utils/auth';
 import Button from '@material-ui/core/Button';
 import ListItem from '@material-ui/core/ListItem';
 import { NavLink, useHistory } from 'react-router-dom';
-import UserContext, { UserConsumer } from '../containers/UserContext';
 
 export default function UserBar() {
   const history = useHistory();
-  const { setUser } = useContext(UserContext);
+  const user = {};
 
   return isAuthenticated() ? (
     <>
-      <UserConsumer>
+      <>
         {({ user }) => (
           <ListItem component={NavLink} to={`/profile/${user.id}`} button>
             {user.name}
           </ListItem>
         )}
-      </UserConsumer>
+      </>
       <Button
         onClick={() => {
           clearSession();
-          setUser({});
+          //setUser({});
           history.push('/login');
         }}
       >
