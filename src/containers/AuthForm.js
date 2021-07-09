@@ -3,8 +3,9 @@ import React from 'react';
 import { useHistory } from 'react-router-dom';
 import API from '../api';
 import { setSession } from '../utils/auth';
+import { connect } from 'react-redux';
 
-export default function AuthForm() {
+function AuthForm({ setUser }) {
   const history = useHistory();
 
   async function onSubmit(event) {
@@ -17,7 +18,7 @@ export default function AuthForm() {
       });
       const { token } = data;
       setSession({ data: token });
-      // setUser(data);
+      setUser(data);
       history.push('/');
     } catch (error) {
       console.error(error);
@@ -56,3 +57,16 @@ export default function AuthForm() {
     </>
   );
 }
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    setUser: (user) => {
+      dispatch({
+        type: 'SET_USER',
+        payload: user,
+      });
+    },
+  };
+};
+
+export default connect(null, mapDispatchToProps)(AuthForm);

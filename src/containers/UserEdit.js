@@ -4,9 +4,9 @@ import Button from '@material-ui/core/Button';
 import { useHistory } from 'react-router-dom';
 import useUser from './useUser';
 import API from '../api';
+import { connect } from 'react-redux';
 
-export default function UserEdit() {
-  const id = 0;
+function UserEdit({ id, updateUser }) {
   const history = useHistory();
 
   const { user } = useUser({ id });
@@ -33,12 +33,12 @@ export default function UserEdit() {
         passwordConfirmation: password2.value,
       });
 
-      // updateUser({
-      //   id,
-      //   name: name.value,
-      //   username: username.value,
-      //   email: email.value,
-      // });
+      updateUser({
+        id,
+        name: name.value,
+        username: username.value,
+        email: email.value,
+      });
       history.push(`/profile/${id}`);
     } catch (error) {
       console.error(error);
@@ -94,3 +94,22 @@ export default function UserEdit() {
     </form>
   );
 }
+
+const mapStateToProps = (state) => {
+  return {
+    id: state.user.id,
+  };
+};
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    updateUser: (payload) => {
+      dispatch({
+        type: 'SET_USER',
+        payload,
+      });
+    },
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(UserEdit);
