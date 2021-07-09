@@ -5,6 +5,7 @@ const blankState = {
     username: '',
     email: '',
   },
+  tweets: [],
 };
 
 let initialState = blankState;
