@@ -18,7 +18,10 @@ function AuthForm({ setUser }) {
       });
       const { token } = data;
       setSession({ data: token });
-      setUser(data);
+      setUser({
+        ...data,
+        token: '',
+      });
       history.push('/');
     } catch (error) {
       console.error(error);
