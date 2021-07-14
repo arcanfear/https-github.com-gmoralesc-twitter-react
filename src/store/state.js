@@ -1,4 +1,4 @@
-const blankState = {
+export const blankState = {
   user: {
     id: '',
     name: '',
@@ -7,6 +7,10 @@ const blankState = {
   },
 };
 
-const initialState = blankState;
+let initialState = blankState;
+const storedState = localStorage.getItem('state');
+if (storedState) {
+  initialState = JSON.parse(storedState);
+}
 
 export default initialState;
