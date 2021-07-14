@@ -7,7 +7,9 @@ import Store from '../store/Store';
 
 export default function AuthForm() {
   const history = useHistory();
-  const { dispatch } = useContext(Store);
+  const {
+    actions: { login },
+  } = useContext(Store);
 
   async function onSubmit(event) {
     event.preventDefault();
@@ -19,14 +21,11 @@ export default function AuthForm() {
       });
       const { token } = data;
       setSession({ data: token });
-      dispatch({
-        type: 'SET_USER',
-        payload: {
-          id: data.id,
-          name: data.name,
-          username: data.username,
-          email: data.email,
-        },
+      login({
+        id: data.id,
+        name: data.name,
+        username: data.username,
+        email: data.email,
       });
       history.push('/');
     } catch (error) {

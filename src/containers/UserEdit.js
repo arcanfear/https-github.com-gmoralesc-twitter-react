@@ -11,7 +11,7 @@ export default function UserEdit() {
     state: {
       user: { id },
     },
-    dispatch,
+    actions: { updateUser },
   } = useContext(Store);
   const history = useHistory();
 
@@ -39,14 +39,11 @@ export default function UserEdit() {
         passwordConfirmation: password2.value,
       });
 
-      dispatch({
-        type: 'SET_USER',
-        payload: {
-          id,
-          name: name.value,
-          username: username.value,
-          email: email.value,
-        },
+      updateUser({
+        id,
+        name: name.value,
+        username: username.value,
+        email: email.value,
       });
       history.push(`/profile/${id}`);
     } catch (error) {

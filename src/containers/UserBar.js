@@ -7,7 +7,10 @@ import Store from '../store/Store';
 
 export default function UserBar() {
   const history = useHistory();
-  const { state, dispatch } = useContext(Store);
+  const {
+    state,
+    actions: { logout },
+  } = useContext(Store);
   const { user } = state;
 
   return isAuthenticated() ? (
@@ -18,7 +21,7 @@ export default function UserBar() {
       <Button
         onClick={() => {
           clearSession();
-          dispatch({ type: 'UNSET_USER' });
+          logout();
           history.push('/login');
         }}
       >
