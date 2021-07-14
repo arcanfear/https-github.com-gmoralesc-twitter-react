@@ -16,7 +16,6 @@ import {
 } from 'react-router-dom';
 import ProtectedRoute from './containers/ProtectedRoute';
 import UserBar from './containers/UserBar';
-import { UserProvider } from './containers/UserContext';
 
 const Login = React.lazy(() => import('./pages/Login'));
 const Home = React.lazy(() => import('./pages/Home'));
@@ -40,49 +39,47 @@ function App() {
   const classes = useStyles();
 
   return (
-    <UserProvider>
-      <Router>
-        <AppBar position="static">
-          <Toolbar>
-            <IconButton
-              edge="start"
-              className={classes.menuButton}
-              color="inherit"
-              aria-label="menu"
-            >
-              <MenuIcon />
-            </IconButton>
-            <ListItem component={NavLink} to="/" button>
-              <Typography variant="h6" className={classes.title}>
-                React Twitter
-              </Typography>
-            </ListItem>
-            <UserBar />
-          </Toolbar>
-        </AppBar>
-        <Container maxWidth="sm">
-          <React.Suspense fallback={<div>Loading...</div>}>
-            <Switch>
-              <Route path="/login">
-                <Login />
-              </Route>
-              <ProtectedRoute path="/profile/:id" exact>
-                <Profile />
-              </ProtectedRoute>
-              <ProtectedRoute path="/profile/:id/edit">
-                <EditProfile />
-              </ProtectedRoute>
-              <ProtectedRoute path="/tweets/:id">
-                <TweetDetails />
-              </ProtectedRoute>
-              <ProtectedRoute path="/">
-                <Home />
-              </ProtectedRoute>
-            </Switch>
-          </React.Suspense>
-        </Container>
-      </Router>
-    </UserProvider>
+    <Router>
+      <AppBar position="static">
+        <Toolbar>
+          <IconButton
+            edge="start"
+            className={classes.menuButton}
+            color="inherit"
+            aria-label="menu"
+          >
+            <MenuIcon />
+          </IconButton>
+          <ListItem component={NavLink} to="/" button>
+            <Typography variant="h6" className={classes.title}>
+              React Twitter
+            </Typography>
+          </ListItem>
+          <UserBar />
+        </Toolbar>
+      </AppBar>
+      <Container maxWidth="sm">
+        <React.Suspense fallback={<div>Loading...</div>}>
+          <Switch>
+            <Route path="/login">
+              <Login />
+            </Route>
+            <ProtectedRoute path="/profile/:id" exact>
+              <Profile />
+            </ProtectedRoute>
+            <ProtectedRoute path="/profile/:id/edit">
+              <EditProfile />
+            </ProtectedRoute>
+            <ProtectedRoute path="/tweets/:id">
+              <TweetDetails />
+            </ProtectedRoute>
+            <ProtectedRoute path="/">
+              <Home />
+            </ProtectedRoute>
+          </Switch>
+        </React.Suspense>
+      </Container>
+    </Router>
   );
 }
 

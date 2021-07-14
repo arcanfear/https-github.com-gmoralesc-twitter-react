@@ -1,16 +1,18 @@
 import React, { useContext } from 'react';
-import UserContext from '../containers/UserContext';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import { useHistory } from 'react-router-dom';
 import useUser from './useUser';
 import API from '../api';
+import Store from '../store/Store';
 
 export default function UserEdit() {
   const {
-    user: { id },
-    setUser: updateUser,
-  } = useContext(UserContext);
+    state: {
+      user: { id },
+    },
+    dispatch,
+  } = useContext(Store);
   const history = useHistory();
 
   const { user } = useUser({ id });
@@ -37,11 +39,14 @@ export default function UserEdit() {
         passwordConfirmation: password2.value,
       });
 
-      updateUser({
-        id,
-        name: name.value,
-        username: username.value,
-        email: email.value,
+      dispatch({
+        type: 'SET_USER',
+        payload: {
+          id,
+          name: name.value,
+          username: username.value,
+          email: email.value,
+        },
       });
       history.push(`/profile/${id}`);
     } catch (error) {

@@ -3,11 +3,11 @@ import React, { useContext } from 'react';
 import { useHistory } from 'react-router-dom';
 import API from '../api';
 import { setSession } from '../utils/auth';
-import UserContext from '../containers/UserContext';
+import Store from '../store/Store';
 
 export default function AuthForm() {
   const history = useHistory();
-  const { setUser } = useContext(UserContext);
+  const { dispatch } = useContext(Store);
 
   async function onSubmit(event) {
     event.preventDefault();
@@ -19,7 +19,15 @@ export default function AuthForm() {
       });
       const { token } = data;
       setSession({ data: token });
-      setUser(data);
+      dispatch({
+        type: 'SET_USER',
+        payload: {
+          id: data.id,
+          name: data.name,
+          username: data.username,
+          email: data.email,
+        },
+      });
       history.push('/');
     } catch (error) {
       console.error(error);
