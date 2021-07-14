@@ -8,10 +8,9 @@ import Store from '../store/Store';
 export default function UserBar() {
   const history = useHistory();
   const {
-    state,
+    selectors: { user },
     actions: { logout },
   } = useContext(Store);
-  const { user } = state;
 
   return isAuthenticated() ? (
     <>

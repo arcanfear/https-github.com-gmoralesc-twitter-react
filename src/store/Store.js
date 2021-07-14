@@ -14,10 +14,14 @@ export function StoreProvider({ children }) {
     logout: () => resetUser(dispatch),
   };
 
+  const selectors = {
+    user: state.user,
+  };
+
   return (
     <Store.Provider
       value={{
-        state,
+        selectors,
         actions,
       }}
     >

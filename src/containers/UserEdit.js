@@ -8,7 +8,7 @@ import Store from '../store/Store';
 
 export default function UserEdit() {
   const {
-    state: {
+    selectors: {
       user: { id },
     },
     actions: { updateUser },
