@@ -1,16 +1,16 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import { isAuthenticated, clearSession } from '../utils/auth';
 import Button from '@material-ui/core/Button';
 import ListItem from '@material-ui/core/ListItem';
 import { NavLink, useHistory } from 'react-router-dom';
-import Store from '../store/Store';
+import { useStore } from '../store/Store';
 
 export default function UserBar() {
   const history = useHistory();
   const {
     selectors: { user },
     actions: { logout },
-  } = useContext(Store);
+  } = useStore();
 
   return isAuthenticated() ? (
     <>

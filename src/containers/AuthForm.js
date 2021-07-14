@@ -1,15 +1,15 @@
 import { Button, TextField, Typography } from '@material-ui/core';
-import React, { useContext } from 'react';
+import React from 'react';
 import { useHistory } from 'react-router-dom';
 import API from '../api';
 import { setSession } from '../utils/auth';
-import Store from '../store/Store';
+import { useStore } from '../store/Store';
 
 export default function AuthForm() {
   const history = useHistory();
   const {
     actions: { login },
-  } = useContext(Store);
+  } = useStore();
 
   async function onSubmit(event) {
     event.preventDefault();

@@ -1,10 +1,10 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import { useHistory } from 'react-router-dom';
 import useUser from './useUser';
 import API from '../api';
-import Store from '../store/Store';
+import { useStore } from '../store/Store';
 
 export default function UserEdit() {
   const {
@@ -12,7 +12,7 @@ export default function UserEdit() {
       user: { id },
     },
     actions: { updateUser },
-  } = useContext(Store);
+  } = useStore();
   const history = useHistory();
 
   const { user } = useUser({ id });

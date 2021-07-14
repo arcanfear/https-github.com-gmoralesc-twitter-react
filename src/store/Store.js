@@ -1,9 +1,11 @@
-import React, { useReducer } from 'react';
+import React, { useContext, useReducer } from 'react';
 import reducer from './reducer';
 import initialState from './state';
 import { resetUser, updateUser } from './actions';
 
 const Store = React.createContext({});
+
+export const useStore = () => useContext(Store);
 
 export function StoreProvider({ children }) {
   const [state, dispatch] = useReducer(reducer, initialState);
