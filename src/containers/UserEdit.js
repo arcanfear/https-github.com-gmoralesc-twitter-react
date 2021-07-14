@@ -2,7 +2,7 @@ import React from 'react';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import { useHistory } from 'react-router-dom';
-import useUser from './useUser';
+import useUser from '../hooks/useUser';
 import API from '../api';
 import { useStore } from '../store/Store';
 
@@ -15,7 +15,7 @@ export default function UserEdit() {
   } = useStore();
   const history = useHistory();
 
-  const { user } = useUser({ id });
+  const { data: user } = useUser({ id });
 
   function cancel() {
     history.push(`/profile/${id}`);

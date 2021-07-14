@@ -3,7 +3,7 @@ import { Button, Typography } from '@material-ui/core';
 import { useParams } from 'react-router-dom';
 import SvgIcon from '@material-ui/core/SvgIcon';
 import { useHistory } from 'react-router-dom';
-import useUser from './useUser';
+import useUser from '../hooks/useUser';
 
 function CalendarIcon(props) {
   return (
@@ -36,7 +36,7 @@ function EmailIcon(props) {
 export default function UserDetails() {
   const { id } = useParams();
   const history = useHistory();
-  const { user, isLoading } = useUser({ id });
+  const { data: user, isLoading } = useUser({ id });
 
   function editProfile() {
     history.push(`/profile/${id}/edit`);
