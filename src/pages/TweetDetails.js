@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { useParams } from 'react-router-dom';
 import { Helmet } from 'react-helmet';
 import { makeStyles } from '@material-ui/core/styles';
@@ -8,7 +8,8 @@ import Button from '@material-ui/core/Button';
 import Paper from '@material-ui/core/Paper';
 import Tweet from '../components/Tweet';
 import Loader from '../components/Loader';
-import API from '../api';
+import Alert from '../components/Alert';
+import { useTweet } from '../hooks';
 
 const useStyles = makeStyles((theme) => ({
   spacer: {
@@ -22,28 +23,19 @@ const useStyles = makeStyles((theme) => ({
 export default function TweetDetails() {
   const classes = useStyles();
   const { id } = useParams();
-  const [tweet, setTweet] = useState(null);
-
-  async function loadTweet() {
-    try {
-      const data = await API.getTweet({ id });
-      if (data) {
-        setTweet(data);
-      }
-    } catch (error) {
-      console.log(error);
-    }
-  }
+  const {
+    data: tweet,
+    error,
+    actions: { createComment, like },
+  } = useTweet({ id });
 
   async function onComment(event) {
     event.preventDefault();
     const { comment } = event.target.elements;
     try {
-      await API.createComment({
-        tweetId: id,
+      await createComment({
         comment: comment.value,
       });
-      await loadTweet();
       comment.value = '';
     } catch (error) {
       console.log(error);
@@ -51,21 +43,13 @@ export default function TweetDetails() {
   }
 
   async function onLike(event) {
+    event.preventDefault();
     try {
-      await API.likeTweet({
-        tweetId: id,
-      });
-      await loadTweet();
+      await like();
     } catch (error) {
       console.log(error);
     }
   }
-
-  useEffect(() => {
-    if (id !== undefined) {
-      loadTweet();
-    }
-  }, [id]);
 
   if (!tweet)
     return (
@@ -79,6 +63,7 @@ export default function TweetDetails() {
       <Helmet>
         <title>Tweet</title>
       </Helmet>
+      {error && <Alert severity="error">{error}</Alert>}
       <Tweet
         id={tweet.id}
         name={tweet.user.name}
