@@ -12,6 +12,7 @@ import FavoriteIcon from '@material-ui/icons/Favorite';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
 import ChatBubbleOutlineIcon from '@material-ui/icons/ChatBubbleOutline';
 import ChatBubbleIcon from '@material-ui/icons/ChatBubble';
+import PropTypes from 'prop-types';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -75,3 +76,49 @@ export default function Tweet({
     </Card>
   );
 }
+
+Tweet.propTypes = {
+  /**
+   * Id
+   */
+  id: PropTypes.string,
+  /**
+   * This is the user's name
+   */
+  name: PropTypes.string,
+  /**
+   * This is the user's username
+   */
+  username: PropTypes.string,
+  /**
+   * This is the tweet's date
+   */
+  date: PropTypes.string,
+  /**
+   * This is the tweet's content
+   */
+  content: PropTypes.string,
+  /**
+   * This is the tweet's comments count
+   */
+  commentsCount: PropTypes.number,
+  /**
+   * This is the tweet's likes count
+   */
+  likes: PropTypes.number,
+  /**
+   * This is a function to broadcast the like from the Tweet
+   */
+  onLike: PropTypes.func,
+};
+
+Tweet.defaultProps = {
+  id: '',
+  name: '',
+  username: '',
+  date: '',
+  content: '',
+  commentsCount: 0,
+  likes: 0,
+  onLike: undefined,
+};

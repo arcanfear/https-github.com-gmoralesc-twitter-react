@@ -1,12 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
-import MuiAlert from '@material-ui/lab/Alert';
+import Alert from '../components/Alert';
 import Tweet from '../components/Tweet';
 import API from '../api';
-
-function Alert(props) {
-  return <MuiAlert elevation={6} variant="filled" {...props} />;
-}
 
 function List() {
   const [data, setData] = useState([]);
@@ -60,7 +56,7 @@ function List() {
 
   return (
     <>
-      {error && <Alert severity="error">{error}</Alert>}
+      {error && <Alert severity="error" message={error} />}
       {data.map(({ id, user, date, content, comments, likes }) => {
         return (
           <div onClick={() => displayTweet({ id })} key={id}>
