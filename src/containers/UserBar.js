@@ -28,8 +28,13 @@ export default function UserBar() {
       </Button>
     </>
   ) : (
-    <ListItem component={NavLink} to="/login" button>
-      Login
-    </ListItem>
+    <>
+      <ListItem component={NavLink} to="/login" button>
+        Login
+      </ListItem>
+      <ListItem component={NavLink} to="/signUp" button>
+        SignUp
+      </ListItem>
+    </>
   );
 }
