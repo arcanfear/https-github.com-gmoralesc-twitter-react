@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { Helmet } from 'react-helmet';
 import { makeStyles } from '@material-ui/core/styles';
@@ -24,16 +24,19 @@ export default function TweetDetails() {
   const { id } = useParams();
   const [tweet, setTweet] = useState(null);
 
-  async function loadTweet() {
-    try {
-      const data = await API.getTweet({ id });
-      if (data) {
-        setTweet(data);
+  const loadTweet = useCallback(
+    async function () {
+      try {
+        const data = await API.getTweet({ id });
+        if (data) {
+          setTweet(data);
+        }
+      } catch (error) {
+        console.log(error);
       }
-    } catch (error) {
-      console.log(error);
-    }
-  }
+    },
+    [id]
+  );
 
   async function onComment(event) {
     event.preventDefault();
@@ -65,7 +68,7 @@ export default function TweetDetails() {
     if (id !== undefined) {
       loadTweet();
     }
-  }, [id]);
+  }, [id, loadTweet]);
 
   if (!tweet)
     return (
