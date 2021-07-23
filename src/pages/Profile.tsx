@@ -1,8 +1,8 @@
-import React from 'react';
+import React, { ReactElement } from 'react';
 import UserDetails from '../containers/UserDetails';
 import { Helmet } from 'react-helmet';
 
-export default function Profile() {
+export default function Profile(): ReactElement {
   return (
     <>
       <Helmet>

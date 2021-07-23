@@ -8,7 +8,7 @@ import Button from '@material-ui/core/Button';
 import Paper from '@material-ui/core/Paper';
 import Tweet from '../components/Tweet';
 import Loader from '../components/Loader';
-import API from '../api';
+import API, { Tweet as TweetType } from '../api';
 
 const useStyles = makeStyles((theme) => ({
   spacer: {
@@ -21,8 +21,8 @@ const useStyles = makeStyles((theme) => ({
 
 export default function TweetDetails() {
   const classes = useStyles();
-  const { id } = useParams();
-  const [tweet, setTweet] = useState(null);
+  const { id } = useParams<{ id: string }>();
+  const [tweet, setTweet] = useState<TweetType | null>(null);
 
   const loadTweet = useCallback(
     async function () {
@@ -38,8 +38,9 @@ export default function TweetDetails() {
     [id]
   );
 
-  async function onComment(event) {
+  async function onComment(event: React.SyntheticEvent<HTMLFormElement>) {
     event.preventDefault();
+    // @ts-ignore: TODO: Fix correct type for Form Submit
     const { comment } = event.target.elements;
     try {
       await API.createComment({
@@ -53,7 +54,7 @@ export default function TweetDetails() {
     }
   }
 
-  async function onLike(event) {
+  async function onLike() {
     try {
       await API.likeTweet({
         tweetId: id,

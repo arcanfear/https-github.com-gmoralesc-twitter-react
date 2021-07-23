@@ -1,8 +1,9 @@
 import http from '../utils/http';
 import { format } from 'date-fns';
 import { es } from 'date-fns/locale';
+import { Id, User, UserParams } from './types'
 
-function formatUser(user) {
+function formatUser(user: User): User {
   //const dateCreatedAt = formatRelative(new Date(user.createdAt), new Date());
   const dateCreatedAt = `${format(new Date(user.createdAt), 'MMMM', {
     locale: es,
@@ -15,7 +16,7 @@ function formatUser(user) {
   };
 }
 
-export async function login({ username = '', password = '' }) {
+export async function login({ username = '', password = '' }: { username: string, password: string }) {
   const response = await http.post(`/users/login`, {
     username,
     password,
@@ -29,7 +30,7 @@ export async function login({ username = '', password = '' }) {
   }
 }
 
-export async function getUser({ id }) {
+export async function getUser({ id }: Id) {
   const response = await http.get(`/users/${id}`);
   const { data } = response.data;
   return formatUser(data);
@@ -42,7 +43,7 @@ export async function updateUser({
   email,
   password,
   passwordConfirmation,
-}) {
+}: UserParams & Id) {
   return await http.put(`/users/${id}`, {
     name,
     username,
@@ -58,7 +59,7 @@ export async function createUser({
   email,
   password,
   passwordConfirmation,
-}) {
+}: UserParams) {
   const response = await http.post(`/users`, {
     name,
     username,
