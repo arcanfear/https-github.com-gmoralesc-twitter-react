@@ -39,3 +39,11 @@ export async function likeTweet({ tweetId }) {
     tweetId,
   });
 }
+
+export async function createTweet({ content }) {
+  const response = await http.post('/tweets', {
+    content,
+  });
+  const data = response.data;
+  return formatTweet(data);
+}

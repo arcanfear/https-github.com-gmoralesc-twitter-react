@@ -1,58 +1,14 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { useHistory } from 'react-router-dom';
 import Alert from '../components/Alert';
 import Tweet from '../components/Tweet';
-import API from '../api';
 
-function List() {
-  const [data, setData] = useState([]);
-  const [error, setError] = useState('');
+function List({ data = [], error = '', onLike }) {
   const history = useHistory();
-
-  async function loadList() {
-    try {
-      const data = await API.getTweets();
-      if (data) {
-        setData(data);
-      }
-    } catch (error) {
-      setError(error.message);
-      console.log(error);
-    }
-  }
 
   function displayTweet({ id }) {
     history.push(`/tweets/${id}`);
   }
-
-  async function onLike(event, id) {
-    event.stopPropagation();
-    try {
-      await API.likeTweet({
-        tweetId: id,
-      });
-      const tweet = await API.getTweet({ id });
-      const newList = data.map((item) => {
-        if (item.id === id) {
-          // return {
-          //   ...item,
-          //   likes: item.likes + 1
-          // };
-          return tweet;
-        } else {
-          return item;
-        }
-      });
-      setData(newList);
-      // await loadList();
-    } catch (error) {
-      console.log(error);
-    }
-  }
-
-  useEffect(() => {
-    loadList();
-  }, []);
 
   return (
     <>
